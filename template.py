@@ -13,6 +13,7 @@ list_of_files = [
     "research/vector-search.ipynb",   
     "requirements.txt",
     "app.py",
+    ".env",
 ]
 
 for filepath in list_of_files:
