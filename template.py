@@ -14,6 +14,7 @@ list_of_files = [
     "requirements.txt",
     "app.py",
     ".env",
+    "data/download.ipynb"
 ]
 
 for filepath in list_of_files:
