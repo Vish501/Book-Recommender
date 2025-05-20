@@ -43,13 +43,17 @@ embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001" )
 db_books = Chroma.from_documents(document_object, embedding=embeddings)
 
 # Function to retrieve all the recommendations as a dataframe
-def retrieve_semantic_recommendations(books: pd.DataFrame, db_books: Chroma, query: str, no_of_recc: int = 10) -> pd.DataFrame:
+# Inputs - Dataset, Chroma vector database, query, number of recommandations
+# Outputs - List of Books as a df
+def retrieve_semantic_recommendations(books: pd.DataFrame, db_books: Chroma, query: str, no_of_recc: int = 50) -> pd.DataFrame:
     response_books = db_books.similarity_search(query, k=no_of_recc)
     isbn_list = [int(doc_object.metadata["source"]) for doc_object in response_books]
     return books[books["isbn13"].isin(isbn_list)]
 
 # Function to recommandation books
-def recommand_books():
+# Inputs - Dataset, Chroma vector database, query, category, tone, name, initial top_k, final top_k
+# Outputs - Ordered list of books as df based on filters
+def recommand_books(books: pd.DataFrame, db_books: Chroma, query: str, category: str, tone: str, name: str, inital_no_of_recc: int = 50, final_no_of_recc: int = 24):
     pass
 
 # Main Block that renders the app dashboard
@@ -72,4 +76,4 @@ with gr.Blocks(theme=gr.themes.Glass()) as dashbaord:
     submit_button.click(...)
 
 if __name__ == "__main__":
-    dashboard.launch() 
+    dashboard.launch()
