@@ -23,6 +23,10 @@ os.chdir(working_directory)
 # Loading in dataset
 books = pd.read_csv("data/books_emotions_and_thumbnail.csv")
 
+# Setting variables for dropdown menus
+category_labels = ["All"] + sorted((books["base_categories"].unique()))
+emotion_labels = ["All"] + sorted(["Anger", "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Neutral"])
+
 # Manually constructing LangChain Document object
 document_object = [
     Document(
@@ -38,3 +42,34 @@ embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001" )
 # Constructing the database
 db_books = Chroma.from_documents(document_object, embedding=embeddings)
 
+# Function to retrieve all the recommendations as a dataframe
+def retrieve_semantic_recommendations(books: pd.DataFrame, db_books: Chroma, query: str, no_of_recc: int = 10) -> pd.DataFrame:
+    response_books = db_books.similarity_search(query, k=no_of_recc)
+    isbn_list = [int(doc_object.metadata["source"]) for doc_object in response_books]
+    return books[books["isbn13"].isin(isbn_list)]
+
+# Function to recommandation books
+def recommand_books():
+    pass
+
+# Main Block that renders the app dashboard
+with gr.Blocks(theme=gr.themes.Glass()) as dashbaord:
+    gr.Markdown("# Book Recommender")
+
+    # Filters for book recommandations
+    with gr.Row():
+        name_filter = ...
+        query_filter = ...
+        category_filter = ...
+        emotion_filter = ...
+        submit_button = ...
+    
+    # Recommandations using inputs from the row
+    gr.Markdown("## Recommednations")
+    output = ...
+    
+    # On Click submit button action
+    submit_button.click(...)
+
+if __name__ == "__main__":
+    dashboard.launch() 
