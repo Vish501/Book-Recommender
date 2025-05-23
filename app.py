@@ -72,6 +72,6 @@ with gr.Blocks(theme=gr.themes.Glass()) as dashboard:
                         inputs=[query_filter, category_filter, emotion_filter],
                         outputs=output)
 
-# Launch the Gradio app
+# Launches the Gradio app
 if __name__ == "__main__":
     dashboard.launch()
