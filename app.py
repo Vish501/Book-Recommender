@@ -66,9 +66,10 @@ def recommend_books(books: pd.DataFrame, db_books: Chroma, query: str, category:
     # Constructing array of information to be used for rendering recommendations
     results = []
 
+    # Saving required information into results for rendering
     for _, row in filtered_recommendations.iterrows()
-        pass
-
+        caption = f"{row['title']} by {row["authors"]}: {row["description"]}"
+        results.append((row["thumbnail"], caption))
     return results
 
 # Main Block that renders the app dashboard
