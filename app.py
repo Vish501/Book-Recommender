@@ -67,7 +67,7 @@ def recommend_books(books: pd.DataFrame, db_books: Chroma, query: str, category:
     results = []
 
     # Saving required information into results for rendering
-    for _, row in filtered_recommendations.iterrows()
+    for _, row in filtered_recommendations.iterrows():
         caption = f"{row['title']} by {row["authors"]}: {row["description"]}"
         results.append((row["thumbnail"], caption))
     return results
